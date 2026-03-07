@@ -27,16 +27,20 @@ Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisi
 
 Route::post('/seed-divisions', function () {
     try {
-        // Clear existing data
-        DB::table('divisions')->truncate();
 
-        // Run the seeder
         Artisan::call('db:seed', [
             '--class' => 'DivisionSeeder'
         ]);
 
-        return response()->json(['message' => 'Divisions cleared and reseeded successfully'], 200);
-    } catch (Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+        return response()->json([
+            'message' => 'Divisions reseeded successfully'
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
+
     }
 });
