@@ -26,13 +26,23 @@ Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisi
 
 Route::post('/seed-divisions', function () {
     try {
-        // Run migrate:refresh --seed to reset and reseed the database
-        Artisan::call('migrate:refresh', [
-            '--seed' => true
+
+        \App\Models\Division::truncate();
+
+        Artisan::call('db:seed', [
+            '--class' => 'DivisionSeeder',
+            '--force' => true
         ]);
 
-        return response()->json(['message' => 'Database refreshed and divisions reseeded successfully'], 200);
-    } catch (Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+        return response()->json([
+            'message' => 'Divisions reseeded successfully'
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
+
     }
 });
