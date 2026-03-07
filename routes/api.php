@@ -27,8 +27,11 @@ Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisi
 Route::post('/seed-divisions', function () {
     try {
 
+        \App\Models\Division::truncate();
+
         Artisan::call('db:seed', [
-            '--class' => 'DivisionSeeder'
+            '--class' => 'DivisionSeeder',
+            '--force' => true
         ]);
 
         return response()->json([
