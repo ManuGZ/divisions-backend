@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DivisionController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('divisions', DivisionController::class);
 Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisions']);
+
+Route::post('/seed-divisions', function () {
+    try {
+        Artisan::call('db:seed', [
+            '--class' => 'DivisionSeeder'
+        ]);
+        return response()->json(['message' => 'Divisions seeded successfully'], 200);
+    } catch (Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
