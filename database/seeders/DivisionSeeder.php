@@ -13,6 +13,7 @@ class DivisionSeeder extends Seeder
      */
     public function run(): void
     {
+        Division::truncate();
         $divisionTypes = [
             "Division Principal",
             "Division Secundaria",
