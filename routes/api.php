@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DivisionController;
-
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('divisions', DivisionController::class);
 Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisions']);
+
+Route::post('/seed-divisions', function () {
+    try {
+        // Clear existing data
+        DB::table('divisions')->truncate();
+
+        // Run the seeder
+        Artisan::call('db:seed', [
+            '--class' => 'DivisionSeeder'
+        ]);
+
+        return response()->json(['message' => 'Divisions cleared and reseeded successfully'], 200);
+    } catch (Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
