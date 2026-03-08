@@ -23,7 +23,7 @@ class DivisionController extends Controller
             'name' => 'required|string|max:45|unique:divisions',
             'parent_id' => 'nullable|exists:divisions,id',
             'ambassador_name' => 'nullable|string|max:100',
-            'superior_division' => 'nullable|exists:divisions,id'
+            'superior_division' => 'nullable|string|max:100'
         ]);
 
         $validated['level'] = rand(1, 10);
