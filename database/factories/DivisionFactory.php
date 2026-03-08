@@ -21,7 +21,8 @@ class DivisionFactory extends Factory
             'parent_id' => null,
             'level' => rand(1, 10),
             'collaborators_count' => rand(0, 100),
-            'ambassador_name' => $this->faker->name()
+            'ambassador_name' => $this->faker->name(),
+            'superior_division' => null
         ];
     }
 }
