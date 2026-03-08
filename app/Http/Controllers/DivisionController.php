@@ -52,7 +52,7 @@ class DivisionController extends Controller
             'name' => 'sometimes|string|max:45|unique:divisions,name,' . $id,
             'parent_id' => 'nullable|exists:divisions,id',
             'ambassador_name' => 'nullable|string|max:100',
-            'superior_division' => 'nullable|exists:divisions,id'
+            'superior_division' => 'nullable|string|max:100' // Ensure it is a string and not another type
         ]);
 
         $division->update($validated);
