@@ -31,6 +31,10 @@ class DivisionController extends Controller
 
         $division = Division::create($validated);
 
+        // Include 'superior_division' explicitly in the response
+        $division->superior_division = $validated['superior_division'] ?? null;
+        $division->save();
+
         return response()->json($division, 201);
     }
 
