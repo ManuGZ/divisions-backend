@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Division;
 
+
 class DivisionSeeder extends Seeder
 {
     /**
@@ -25,7 +26,7 @@ class DivisionSeeder extends Seeder
             "Operaciones"
         ];
 
-        // Create 200 independent divisions with random types and collaborators count
+        // Crea 200 divisiones independientes y asigna un tipo aleatorio a cada una
         $independentDivisions = Division::factory(200)->create()->each(function ($division) use ($divisionTypes) {
             $division->update([
                 'superior_division' => $divisionTypes[array_rand($divisionTypes)], // Ensure 'type' is populated
@@ -33,7 +34,7 @@ class DivisionSeeder extends Seeder
             ]);
         });
 
-        // Create 300 subdivisions and distribute them among the independent divisions
+        // Crea 300 subdivisiones y distribuye las entre las divisiones independientes
         Division::factory(300)->create()->each(function ($subdivision) use ($independentDivisions, $divisionTypes) {
             $subdivision->update([
                 'parent_id' => $independentDivisions->random()->id,

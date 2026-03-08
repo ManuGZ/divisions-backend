@@ -17,6 +17,7 @@ class DivisionController extends Controller
             ->get();
     }
 
+    //Metodo POST
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -31,19 +32,22 @@ class DivisionController extends Controller
 
         $division = Division::create($validated);
 
-        // Include 'superior_division' explicitly in the response
+        //
         $division->superior_division = $validated['superior_division'] ?? null;
         $division->save();
 
         return response()->json($division, 201);
     }
 
+
+    //Metodo GET
     public function show($id)
     {
         return Division::with(['parent','children'])
             ->findOrFail($id);
     }
 
+    //Metodo PUT
     public function update(Request $request, $id)
     {
         $division = Division::findOrFail($id);
@@ -52,7 +56,7 @@ class DivisionController extends Controller
             'name' => 'sometimes|string|max:45|unique:divisions,name,' . $id,
             'parent_id' => 'nullable|exists:divisions,id',
             'ambassador_name' => 'nullable|string|max:100',
-            'superior_division' => 'nullable|string|max:100' // Ensure it is a string and not another type
+            'superior_division' => 'nullable|string|max:100' 
         ]);
 
         $division->update($validated);
@@ -60,6 +64,7 @@ class DivisionController extends Controller
         return response()->json($division);
     }
 
+    //Metodo DELETE
     public function destroy($id)
     {
         $division = Division::findOrFail($id);
@@ -68,6 +73,8 @@ class DivisionController extends Controller
         return response()->json(['message' => 'Division eliminada correctamente']);
     }
 
+
+    //Metodo GET para obtener subdivisiones
     public function subdivisions($id)
     {
         $division = Division::findOrFail($id);
