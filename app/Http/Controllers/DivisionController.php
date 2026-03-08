@@ -22,7 +22,8 @@ class DivisionController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:45|unique:divisions',
             'parent_id' => 'nullable|exists:divisions,id',
-            'ambassador_name' => 'nullable|string|max:100'
+            'ambassador_name' => 'nullable|string|max:100',
+            'superior_division' => 'nullable|exists:divisions,id'
         ]);
 
         $validated['level'] = rand(1, 10);
@@ -46,7 +47,8 @@ class DivisionController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|string|max:45|unique:divisions,name,' . $id,
             'parent_id' => 'nullable|exists:divisions,id',
-            'ambassador_name' => 'nullable|string|max:100'
+            'ambassador_name' => 'nullable|string|max:100',
+            'superior_division' => 'nullable|exists:divisions,id'
         ]);
 
         $division->update($validated);
