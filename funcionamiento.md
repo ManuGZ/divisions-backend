@@ -75,6 +75,7 @@
 {
     "name": "División Actualizada",
     "collaborators_count": 20,
+    "ambassador_name": "Jane Doe",
     "superior_division": "Finanzas"
 }
 ```
