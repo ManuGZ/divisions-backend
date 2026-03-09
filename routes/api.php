@@ -21,9 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Rutas para el controlador de divisiones
 Route::apiResource('divisions', DivisionController::class);
+// Ruta para obtener las subdivisiones de una división
 Route::get('divisions/{id}/subdivisions', [DivisionController::class, 'subdivisions']);
 
+// Ruta para resembrar las divisiones
 Route::post('/seed-divisions', function () {
     try {
 
